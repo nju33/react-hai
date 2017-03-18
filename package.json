@@ -17,7 +17,7 @@
   },
   "name": "react-hai",
   "description": "Hai's React component",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "./dist/Hai.js",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
@@ -33,10 +33,16 @@
   },
   "xo": {
     "space": 2,
-    "envs": ["node", "browser"],
+    "envs": [
+      "node",
+      "browser"
+    ],
     "overrides": [
       {
-        "files": ["example/**/*", "components/**/*"],
+        "files": [
+          "example/**/*",
+          "components/**/*"
+        ],
         "rules": {
           "no-unused-vars": "off",
           "import/no-unresolved": [
