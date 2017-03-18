@@ -13,7 +13,7 @@ export default class Hai extends Component {
     }, {});
   }
 
-  handleClick(ev) {
+  handleClick() {
     const {target} = this.refs;
     const {talks, callback, theme} = this.props;
 
@@ -40,6 +40,6 @@ Hai.propTypes = {
 Hai.defaultProps = {
   theme: 'dark',
   callback(answers) {
-    console.log(answers)
+    console.log(answers);
   }
 };
