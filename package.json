@@ -1,0 +1,32 @@
+{
+  "dependencies": {
+    "@nju33/hai": "^0.2.1",
+    "babel-preset-env": "^1.2.2",
+    "babel-preset-react": "^6.23.0"
+  },
+  "devDependencies": {
+    "babel-loader": "^6.4.1",
+    "babel-register": "^6.24.0",
+    "babili-webpack-plugin": "^0.0.11",
+    "html-webpack-plugin": "^2.28.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "name": "react-hai",
+  "description": "Hai's React component",
+  "version": "0.0.0",
+  "main": "./dist/Hai.js",
+  "author": "nju33 <nju33.ki@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "react-component",
+    "dialog"
+  ],
+  "scripts": {
+    "dev": "webpack-dev-server --config webpack.config.dev.babel.js",
+    "build": "webpack --config webpack.config.component.babel.js",
+    "prepublish": "yarn build"
+  }
+}
