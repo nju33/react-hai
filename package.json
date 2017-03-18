@@ -17,7 +17,7 @@
   },
   "name": "react-hai",
   "description": "Hai's React component",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "./dist/Hai.js",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
