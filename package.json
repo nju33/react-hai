@@ -28,7 +28,8 @@
   "scripts": {
     "dev": "webpack-dev-server --config webpack.config.dev.babel.js",
     "build": "webpack --config webpack.config.component.babel.js",
-    "prepublish": "yarn build"
+    "prepublish": "yarn build",
+    "test": "xo"
   },
   "xo": {
     "space": 2,
