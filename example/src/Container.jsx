@@ -36,15 +36,18 @@ export default class Container extends Component {
 
     return (
       <div>
-        <Hai {...props} style={{
-          position: 'absolute',
-          right: '50%',
-          bottom: '50%',
-          transform: 'translate(50%, 50%)',
-          height: '2em',
-          width: '2em',
-          background: '#888'
-        }}></Hai>
+        <Hai {...props}>
+          {/* text */}
+          <div style={{
+            position: 'absolute',
+            right: '50%',
+            bottom: '50%',
+            transform: 'translate(50%, 50%)',
+            height: '2em',
+            width: '2em',
+            background: '#888'
+          }}></div>
+        </Hai>
       </div>
     );
   }
