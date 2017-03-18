@@ -44,6 +44,11 @@ yarn
 yarn dev
 ```
 
+## Related
+
+- [hai](https://github.com/nju33/hai)
+- [vue-hai](https://github.com/nju33/vue-hai)
+
 ## License
 
 The MIT License (MIT)

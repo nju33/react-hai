@@ -16,7 +16,7 @@ export default class Hai extends Component {
   componentWillMount() {
     const childrenLength = Children.count(this.props.children);
     if (childrenLength > 1) {
-      throw new Error('Children\'s number of elements should be 1 or 0')
+      throw new Error('Children\'s number of elements should be 1 or 0');
     }
   }
 
