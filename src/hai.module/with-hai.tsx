@@ -1,9 +1,9 @@
 import React from 'react';
 import {HaiFunctionsConsumer} from './hai.provider';
 
-function withDou<P, S>(Component: React.ComponentClass<P, S> | React.SFC<P>) {
+function withHai<P, S>(Component: React.ComponentClass<P, S> | React.SFC<P>) {
   return class extends React.Component<P, S> {
-    static displayName = `withDou(${Component.displayName})`;
+    static displayName = `withHai(${Component.displayName})`;
 
     render() {
       return (
@@ -18,4 +18,4 @@ function withDou<P, S>(Component: React.ComponentClass<P, S> | React.SFC<P>) {
   };
 }
 
-export {withDou};
+export {withHai};
