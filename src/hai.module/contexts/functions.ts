@@ -1,8 +1,15 @@
 import React from 'react';
 
 export interface FunctionsProps {
-  open(ev: React.MouseEvent<HTMLElement>): any;
-  hide(ev?: React.MouseEvent<HTMLElement>): any;
+  register(
+    id: string,
+    data: {
+      width: number;
+      height: number;
+    },
+  ): any;
+  open(id: string): ((ev: React.MouseEvent<HTMLElement>) => any);
+  hide(id: string): ((ev?: React.MouseEvent<HTMLElement>) => any);
 }
 
 export interface HaiFunctionsProps {
@@ -10,6 +17,9 @@ export interface HaiFunctionsProps {
 }
 
 export const Functions = React.createContext<FunctionsProps>({
+  register() {
+    throw new Error('no implement');
+  },
   open() {
     throw new Error('no implement');
   },
