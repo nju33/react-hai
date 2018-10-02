@@ -1,30 +1,79 @@
 import React from 'react';
+import noScroll from 'no-scroll';
+import {
+  Functions as FunctionsContext,
+  FunctionsProps,
+  State as StateContext,
+} from './contexts';
 
-export interface HaiFunctions {
-  open(ev: React.MouseEvent<unknown>): any;
+export interface HaiProviderState {
+  hidden: boolean;
+  position: {
+    top: number;
+    left: number;
+  };
 }
 
-const context = React.createContext<HaiFunctions>({
-  open() {
-    throw new Error('no implement');
-  },
-});
+export class HaiProvider extends React.Component<unknown, HaiProviderState> {
+  constructor(props: unknown) {
+    super(props);
 
-export const HaiFunctionsConsumer = context.Consumer;
+    this.state = {
+      hidden: true,
+      position: {
+        top: -9999,
+        left: -9999,
+      },
+    };
+  }
 
-export class HaiProvider extends React.Component {
-  open = (ev: React.MouseEvent<HTMLElement>) => {
+  private getPosition(clientRect: ClientRect) {
+    return {
+      top: clientRect.top + clientRect.height,
+      left: clientRect.left,
+    };
+  }
+
+  private resetState() {
+    this.setState({
+      hidden: true,
+      position: {
+        top: -9999,
+        left: -9999,
+      },
+    });
+  }
+
+  open: FunctionsProps['open'] = ev => {
     ev.preventDefault();
+    noScroll.on();
 
-    const a = ev.currentTarget.getBoundingClientRect();
-    console.log(a);
+    const contextPosition = this.getPosition(
+      ev.currentTarget.getBoundingClientRect(),
+    );
+
+    this.setState({
+      hidden: false,
+      position: contextPosition,
+    });
+  };
+
+  hide: FunctionsProps['hide'] = ev => {
+    if (ev !== undefined) {
+      ev.preventDefault();
+    }
+    noScroll.off();
+
+    this.resetState();
   };
 
   render() {
     return (
-      <context.Provider value={{open: this.open}}>
-        {this.props.children}
-      </context.Provider>
+      <FunctionsContext.Provider value={{open: this.open, hide: this.hide}}>
+        <StateContext.Provider value={this.state}>
+          {this.props.children}
+        </StateContext.Provider>
+      </FunctionsContext.Provider>
     );
   }
 }

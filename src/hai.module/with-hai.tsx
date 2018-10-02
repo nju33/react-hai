@@ -1,5 +1,5 @@
 import React from 'react';
-import {HaiFunctionsConsumer} from './hai.provider';
+import {Functions} from './contexts';
 
 function withHai<P, S>(Component: React.ComponentClass<P, S> | React.SFC<P>) {
   return class extends React.Component<P, S> {
@@ -7,12 +7,12 @@ function withHai<P, S>(Component: React.ComponentClass<P, S> | React.SFC<P>) {
 
     render() {
       return (
-        <HaiFunctionsConsumer>
+        <Functions.Consumer>
           {fns => {
             // @ts-ignore
             return <Component {...this.props} hai={fns} />;
           }}
-        </HaiFunctionsConsumer>
+        </Functions.Consumer>
       );
     }
   };

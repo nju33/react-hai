@@ -30,6 +30,17 @@ import {Hai} from './hai.module/hai.organism'
 				<>
 					<NestOfButton />
 				</>
+				<Hai
+					id="hai1"
+					items={[
+						'foo',
+						'bar',
+						'baz'
+					]}
+					onItemClick={itemIndex => {
+						console.log(itemIndex)
+					}}
+				/>
 			</HaiProvider>
 		)
 	}}
