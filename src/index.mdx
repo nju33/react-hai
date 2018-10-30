@@ -6,7 +6,7 @@ name: Hai
 import {Playground} from 'docz';
 import {HaiProvider} from './hai.module/hai.provider';
 import {withHai} from './hai.module/with-hai';
-import {Hai} from './hai.module/hai.organism'
+import {Hai, HaiStepType} from './hai.module/organisms';
 
 # Usage
 
@@ -20,7 +20,7 @@ import {Hai} from './hai.module/hai.organism'
 					<button onClick={props.hai.open('hai3')} style={{position: 'absolute', right: 0, top: 10}}>button3</button>
 					<button onClick={props.hai.open('hai4')} style={{position: 'absolute', right: 30, bottom: 10}}>button4</button>
 					<button onClick={props.hai.open('hai5')} style={{position: 'fixed', right: '0', top: '30'}}>button5</button>
-					<button onClick={props.hai.open('hai6')} style={{position: 'fixed', right: '0', bottom: '0'}}>button6</button>
+					<button onClick={props.hai.open('hai6')} style={{position: 'fixed', right: 100, bottom: '0'}}>button6</button>
 				</div>
 			)
 		});
@@ -32,84 +32,177 @@ import {Hai} from './hai.module/hai.organism'
 				</>
 				<Hai
 					id="hai1"
-					items={[
-						'foo',
-						'bar',
-						'baz'
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fuga',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
 					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
 				/>
-
-				<Hai
-					id="hai2"
-					items={[
-						'foo',
-						'bar',
-						'baz',
-						'qux',
-						'quux'
-					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
-				/>
-
 				<Hai
 					id="hai3"
-					items={[
-						'foo',
-						'bar',
-						'baz',
-						'qux',
-						'quux'
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fuga',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
 					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
 				/>
-
+				<Hai
+					id="hai2"
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fuge',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
+					]}
+				/>
 				<Hai
 					id="hai4"
-					items={[
-						'foo',
-						'bar',
-						'baz',
-						'qux',
-						'quux'
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fuga',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
 					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
 				/>
-
 				<Hai
 					id="hai5"
-					items={[
-						'foo',
-						'bar',
-						'baz',
-						'qux',
-						'quux'
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fugaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
 					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
 				/>
-
 				<Hai
 					id="hai6"
-					items={[
-						'foo',
-						'bar',
-						'baz',
-						'qux',
-						'quux'
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fugaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
 					]}
-					onItemClick={itemIndex => {
-						console.log(itemIndex)
-					}}
 				/>
 			</HaiProvider>
 		)

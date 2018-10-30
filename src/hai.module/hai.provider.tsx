@@ -5,13 +5,16 @@ import {
   FunctionsProps,
   State as StateContext,
 } from './contexts';
+// import {element} from 'prop-types';
 
 export interface HaiProviderInfo {
   hidden: boolean;
-  rect: {
-    width: number;
-    height: number;
-  };
+  emitter?: HTMLElement;
+  element: HTMLDivElement;
+  // rect: {
+  //   width: number;
+  //   height: number;
+  // };
   position:
     | {
         top: number;
@@ -76,10 +79,6 @@ export class HaiProvider extends React.Component<unknown, HaiProviderState> {
       }
 
       target.hidden = true;
-      target.rect = {
-        width: 0,
-        height: 0,
-      };
       target.position = {
         top: -9999,
         left: -9999,
@@ -90,10 +89,10 @@ export class HaiProvider extends React.Component<unknown, HaiProviderState> {
     });
   }
 
-  register: FunctionsProps['register'] = (id, info) => {
+  register: FunctionsProps['register'] = (id, elem) => {
     this.state.items.set(id, {
       hidden: true,
-      rect: info,
+      element: elem,
       position: {
         top: -9999,
         left: -9999,
@@ -102,14 +101,22 @@ export class HaiProvider extends React.Component<unknown, HaiProviderState> {
   };
 
   open: FunctionsProps['open'] = id => ev => {
+    ev.persist();
     ev.preventDefault();
     noScroll.on();
 
     const target = this.state.items.get(id);
+    const emitter = ev.currentTarget;
+    // const rect = ev.currentTarget.getBoundingClientRect();
 
     const contextPosition = this.getPosition(
-      ev.currentTarget.getBoundingClientRect(),
-      target === undefined ? {width: 0, height: 0} : target.rect,
+      emitter.getBoundingClientRect(),
+      target === undefined
+        ? {width: 0, height: 0}
+        : {
+            width: target.element.clientWidth,
+            height: target.element.clientHeight,
+          },
     );
 
     this.setState(state => {
@@ -118,9 +125,37 @@ export class HaiProvider extends React.Component<unknown, HaiProviderState> {
       }
 
       target.hidden = false;
+      target.emitter = emitter;
       target.position = contextPosition;
       state.items.set(id, target);
 
+      return {items: state.items};
+    });
+  };
+
+  adjustPosition: FunctionsProps['adjustPosition'] = id => {
+    const target = this.state.items.get(id);
+
+    if (target === undefined) {
+      return;
+    }
+
+    if (target.emitter === undefined) {
+      return;
+    }
+
+    const contextPosition = this.getPosition(
+      target.emitter.getBoundingClientRect(),
+      target === undefined ? {width: 0, height: 0} : {
+        width: target.element.clientWidth,
+        height: target.element.clientHeight,
+      },
+    );
+    this.setState(state => {
+      if (target === undefined) {
+        return state;
+      }
+      target.position = contextPosition;
       return {items: state.items};
     });
   };
@@ -137,7 +172,12 @@ export class HaiProvider extends React.Component<unknown, HaiProviderState> {
   render() {
     return (
       <FunctionsContext.Provider
-        value={{register: this.register, open: this.open, hide: this.hide}}
+        value={{
+          register: this.register,
+          adjustPosition: this.adjustPosition,
+          open: this.open,
+          hide: this.hide,
+        }}
       >
         <StateContext.Provider value={this.state}>
           {this.props.children}
