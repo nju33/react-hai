@@ -1,7 +1,10 @@
 {
   "name": "react-hai",
   "version": "1.0.1-0",
-  "main": "index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "source": "./src/index.ts",
   "repository": "nju33/react-hai",
   "author": "nju33 <nju33.ki@gmail.com>",
   "license": "MIT",
