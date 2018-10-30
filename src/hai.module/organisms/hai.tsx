@@ -12,7 +12,7 @@ export enum HaiStepType {
 export interface HaiStepList {
   type: HaiStepType.List;
   items: string[];
-  onClick(index: number): number | undefined;
+  onClick(index: number): number | void;
 }
 
 export type HaiStep = HaiStepList;
