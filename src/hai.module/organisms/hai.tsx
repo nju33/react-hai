@@ -2,7 +2,7 @@ import React from 'react';
 import {createPortal} from 'react-dom';
 import produce from 'immer';
 import {HaiFunctionsProps, State as StateContext} from '../contexts';
-import {Box, Content} from '../atoms';
+import {Box, Content, List as OriginalList} from '../atoms';
 import {withHai} from '../with-hai';
 
 export enum HaiStepType {
@@ -27,6 +27,9 @@ export interface HaiState {
   stepNum: number;
   step: HaiStep;
 }
+
+const componentMap = new Map();
+componentMap.set('List', OriginalList);
 
 export class RealHai extends React.Component<HaiProps, HaiState> {
   boxRef: React.RefObject<HTMLDivElement>;
@@ -75,7 +78,7 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
     ev: React.MouseEvent<unknown>,
   ) => {
     this.cancelEvent(ev);
-    callback(ev);
+    callback();
   };
 
   private runStep = (stepNum: number) => {
@@ -96,46 +99,49 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
     );
   };
 
+  getList() {
+    return componentMap.get('List');
+  }
+
   // @ts-ignore
   Content: React.SFC<{step: HaiStep}> = React.memo((props: {step: HaiStep}) => {
     const {step} = props;
     switch (step.type) {
       case HaiStepType.List: {
         const {items, onClick} = step;
+        const List = this.getList();
 
         return (
-          <ul>
+          <List>
             {items.map((item, i) => {
               return (
                 <li
                   key={item}
-                  onClick={this.handleEvent(
-                    (ev: React.MouseEvent<HTMLElement>) => {
-                      const next = onClick(i);
-                      if (next === undefined) {
-                        this.props.hai.hide(this.props.id)();
-                        this.reset();
-                        return;
-                      }
+                  onClick={this.handleEvent(() => {
+                    const next = onClick(i);
+                    if (next === undefined) {
+                      this.props.hai.hide(this.props.id)();
+                      this.reset();
+                      return;
+                    }
 
-                      if (this.props.steps[next] === undefined) {
-                        this.props.hai.hide(this.props.id)();
-                        this.reset();
-                        return;
-                      }
+                    if (this.props.steps[next] === undefined) {
+                      this.props.hai.hide(this.props.id)();
+                      this.reset();
+                      return;
+                    }
 
-                      this.runStep(next);
-                      setTimeout(() => {
-                        this.props.hai.adjustPosition(this.props.id);
-                      }, 0);
-                    },
-                  )}
+                    this.runStep(next);
+                    setTimeout(() => {
+                      this.props.hai.adjustPosition(this.props.id);
+                    }, 0);
+                  })}
                 >
                   {item}
                 </li>
               );
             })}
-          </ul>
+          </List>
         );
       }
       default: {
@@ -147,7 +153,7 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
   private onBoxClick = () => {
     this.props.hai.hide(this.props.id)();
     this.reset();
-  }
+  };
 
   render() {
     return createPortal(
@@ -180,3 +186,14 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
 }
 
 export const Hai = withHai<React.ComponentClass<HaiProps>>(RealHai);
+Object.defineProperties(Hai, {
+  List: {
+    set(NewList: any) {
+      console.log(123123);
+      componentMap.set('List', NewList);
+    },
+    get() {
+      return componentMap.get('List');
+    },
+  },
+});

@@ -4,14 +4,19 @@ name: Hai
 ---
 
 import {Playground} from 'docz';
-import {HaiProvider} from './hai.module/hai.provider';
-import {withHai} from './hai.module/with-hai';
-import {Hai, HaiStepType} from './hai.module/organisms';
+import styled from 'styled-components';
+import {HaiProvider, withHai, Hai, HaiStepType, List as HaiList} from '.';
 
 # Usage
 
 <Playground>
 	{() => {
+		const MyHaiList = styled(HaiList)`
+			background: #444;
+			color: #fff;
+		`;
+		{/* Hai.List = MyHaiList; */}
+
 		const NestOfButton = withHai(props => {
 			return (
 				<div style={{width: '100%', height: '40vh', position: 'relative'}}>

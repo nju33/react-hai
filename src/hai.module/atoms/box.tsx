@@ -8,8 +8,6 @@ export const Box = styled.aside`
   background: #fff;
   min-width: 150px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
 
   &:before {
     content: '';
@@ -24,16 +22,5 @@ export const Box = styled.aside`
     opacity: 0;
     z-index: -999;
     transition-delay: .1s, .1s;
-  }
-
-  & ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  & li {
-    padding: .1em .5em;
-    cursor: pointer;
   }
 `;
