@@ -2,8 +2,8 @@ import React from 'react';
 import {createPortal} from 'react-dom';
 import produce from 'immer';
 import {HaiFunctionsProps, State as StateContext} from '../contexts';
-import {Box, Content, List as OriginalList} from '../atoms';
-import {withHai} from '../with-hai';
+import {Content, List as OriginalList} from '../atoms';
+import * as customizableComponents from '../customizable-components';
 
 export enum HaiStepType {
   List,
@@ -20,7 +20,7 @@ export type HaiStep = HaiStepList;
 export interface HaiProps {
   id: string;
   steps: HaiStep[];
-  // onItemClick(itemIndex: number): any;
+  components: Partial<typeof customizableComponents>;
 }
 
 export interface HaiState {
@@ -31,10 +31,15 @@ export interface HaiState {
 const componentMap = new Map();
 componentMap.set('List', OriginalList);
 
-export class RealHai extends React.Component<HaiProps, HaiState> {
+export class Hai extends React.Component<HaiProps, HaiState> {
+  static defaultProps = {
+    components: customizableComponents,
+  };
+
   boxRef: React.RefObject<HTMLDivElement>;
   // @ts-ignore
-  props: HaiProps & HaiFunctionsProps;
+  props: HaiProps &
+    HaiFunctionsProps & {components: typeof customizableComponents};
   portalElement: HTMLElement;
 
   constructor(props: HaiProps & HaiFunctionsProps) {
@@ -99,20 +104,15 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
     );
   };
 
-  getList() {
-    return componentMap.get('List');
-  }
-
   // @ts-ignore
   Content: React.SFC<{step: HaiStep}> = React.memo((props: {step: HaiStep}) => {
     const {step} = props;
     switch (step.type) {
       case HaiStepType.List: {
         const {items, onClick} = step;
-        const List = this.getList();
 
         return (
-          <List>
+          <this.props.components.List>
             {items.map((item, i) => {
               return (
                 <li
@@ -141,7 +141,7 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
                 </li>
               );
             })}
-          </List>
+          </this.props.components.List>
         );
       }
       default: {
@@ -162,7 +162,7 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
           const target = state.items.get(this.props.id);
 
           return (
-            <Box
+            <this.props.components.Box
               // @ts-ignore
               ref={this.boxRef}
               aria-hidden={target === undefined ? true : target.hidden}
@@ -176,7 +176,7 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
               <Content>
                 <this.Content step={this.state.step} />
               </Content>
-            </Box>
+            </this.props.components.Box>
           );
         }}
       </StateContext.Consumer>,
@@ -184,16 +184,3 @@ export class RealHai extends React.Component<HaiProps, HaiState> {
     );
   }
 }
-
-export const Hai = withHai<React.ComponentClass<HaiProps>>(RealHai);
-Object.defineProperties(Hai, {
-  List: {
-    set(NewList: any) {
-      console.log(123123);
-      componentMap.set('List', NewList);
-    },
-    get() {
-      return componentMap.get('List');
-    },
-  },
-});

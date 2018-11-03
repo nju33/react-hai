@@ -5,18 +5,12 @@ name: Hai
 
 import {Playground} from 'docz';
 import styled from 'styled-components';
-import {HaiProvider, withHai, Hai, HaiStepType, List as HaiList} from '.';
+import {HaiProvider, withHai, Hai, HaiStepType, List as HaiList, createHai} from '.';
 
 # Usage
 
 <Playground>
 	{() => {
-		const MyHaiList = styled(HaiList)`
-			background: #444;
-			color: #fff;
-		`;
-		{/* Hai.List = MyHaiList; */}
-
 		const NestOfButton = withHai(props => {
 			return (
 				<div style={{width: '100%', height: '40vh', position: 'relative'}}>
@@ -26,8 +20,16 @@ import {HaiProvider, withHai, Hai, HaiStepType, List as HaiList} from '.';
 					<button onClick={props.hai.open('hai4')} style={{position: 'absolute', right: 30, bottom: 10}}>button4</button>
 					<button onClick={props.hai.open('hai5')} style={{position: 'fixed', right: '0', top: '30'}}>button5</button>
 					<button onClick={props.hai.open('hai6')} style={{position: 'fixed', right: 100, bottom: '0'}}>button6</button>
+					<button onClick={props.hai.open('hai7')} style={{position: 'fixed', left: 300, top: 100}}>button7</button>
 				</div>
 			)
+		});
+
+		const MyHai = createHai({
+			List: styled(HaiList)`
+				background: #333;
+				color: #fff;
+			`,
 		});
 
 		return (
@@ -182,6 +184,35 @@ import {HaiProvider, withHai, Hai, HaiStepType, List as HaiList} from '.';
 				/>
 				<Hai
 					id="hai6"
+					steps={[
+						{
+							type: HaiStepType.List,
+							items: [
+								'foo',
+								'bar',
+								'baz'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return 1;
+							}
+						},
+						{
+							type: HaiStepType.List,
+							items: [
+								'hoge',
+								'fugaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+								'bazu'
+							],
+							onClick: itemIndex => {
+								{/* console.log(itemIndex); */}
+								return;
+							}
+						}
+					]}
+				/>
+				<MyHai
+					id="hai7"
 					steps={[
 						{
 							type: HaiStepType.List,
