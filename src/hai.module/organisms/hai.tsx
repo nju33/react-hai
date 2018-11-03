@@ -20,7 +20,7 @@ export type HaiStep = HaiStepList;
 export interface HaiProps {
   id: string;
   steps: HaiStep[];
-  components: Partial<typeof customizableComponents>;
+  components?: Partial<typeof customizableComponents>;
 }
 
 export interface HaiState {
