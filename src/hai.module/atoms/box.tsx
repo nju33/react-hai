@@ -5,7 +5,6 @@ export const Box = styled.aside`
   opacity: 1;
   z-index: 999;
   transition: opacity .1s, z-index .1s;
-  background: #fff;
   min-width: 150px;
   box-sizing: border-box;
 
