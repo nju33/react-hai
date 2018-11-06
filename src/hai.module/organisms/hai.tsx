@@ -2,7 +2,7 @@ import React from 'react';
 import {createPortal} from 'react-dom';
 import produce from 'immer';
 import {HaiFunctionsProps, State as StateContext} from '../contexts';
-import {Content, List as OriginalList} from '../atoms';
+import {Content} from '../atoms';
 import * as customizableComponents from '../customizable-components';
 
 export enum HaiStepType {
@@ -28,10 +28,7 @@ export interface HaiState {
   step: HaiStep;
 }
 
-const componentMap = new Map();
-componentMap.set('List', OriginalList);
-
-export class Hai extends React.Component<HaiProps, HaiState> {
+export class Hai extends React.PureComponent<HaiProps, HaiState> {
   static defaultProps = {
     components: customizableComponents,
   };
@@ -42,6 +39,14 @@ export class Hai extends React.Component<HaiProps, HaiState> {
     HaiFunctionsProps & {components: typeof customizableComponents};
   portalElement: HTMLElement;
 
+  private initState(props: HaiProps & HaiFunctionsProps) {
+    const initialState = {
+      stepNum: 0,
+      step: props.steps[0],
+    };
+    this.state = produce<HaiState>(draft => draft)(initialState);
+  }
+
   constructor(props: HaiProps & HaiFunctionsProps) {
     super(props);
     this.boxRef = React.createRef<HTMLDivElement>();
@@ -49,18 +54,16 @@ export class Hai extends React.Component<HaiProps, HaiState> {
     let portalElement = document.getElementById(props.id);
     if (portalElement !== null) {
       this.portalElement = portalElement;
+      this.initState(props);
       return;
     }
+
     portalElement = document.createElement('div');
     portalElement.id = props.id;
     this.portalElement = portalElement;
     document.body.appendChild(this.portalElement);
 
-    const initialState = {
-      stepNum: 0,
-      step: props.steps[0],
-    };
-    this.state = produce<HaiState>(draft => draft)(initialState);
+    this.initState(props);
   }
 
   componentDidMount() {
