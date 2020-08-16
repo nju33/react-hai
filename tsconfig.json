@@ -1,0 +1,32 @@
+{
+  "include": [".*.js", "*.js", "src"],
+  "exclude": [],
+  "compilerOptions": {
+    /* https://www.typescriptlang.org/docs/handbook/tsconfig-json.html */
+    "target": "es6",
+    "module": "esnext",
+    // "lib": [],
+    "jsx": "react",
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./out",
+    "rootDir": "./src",
+    "isolatedModules": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {},
+    // "rootDirs": [],
+    // "typeRoots": [],
+    // "types": [],
+    "esModuleInterop": true,
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
