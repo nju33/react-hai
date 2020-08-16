@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "config:base",
+    ":library",
+    ":label(renovate)",
+    ":preserveSemverRanges",
+    ":disableMajorUpdates",
+    ":automergeMinor",
+    ":timezone(Asia/Tokyo)",
+    ":prHourlyLimit2",
+    ":maintainLockFilesMonthly",
+    "packages:eslint",
+    "packages:stylelint"
+  ]
+}
